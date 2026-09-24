@@ -8,13 +8,13 @@ namespace UI.Blazor.Components.Pages;
 public partial class Home
 {
     [Inject] public ILogger<Home> Logger { get; set; } = null!;
-    [Inject] public IQotdService QotdService { get; set; } = null!;
+    [Inject] public IServiceManager ServiceManager { get; set; } = null!;
     public QuoteOfTheDayViewModel? QotdViewModel { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         Logger.LogInformation($"{nameof(OnInitializedAsync)} aufgerufen...");
 
-        QotdViewModel = await QotdService.GetQuoteOfTheDayAsync();
+        QotdViewModel = await ServiceManager.QotdService.GetQuoteOfTheDayAsync();
     }
 }
