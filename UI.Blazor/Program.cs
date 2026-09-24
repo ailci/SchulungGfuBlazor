@@ -7,6 +7,7 @@ using UI.Blazor.Components.Account;
 using UI.Blazor.ComponentsLibrary;
 using UI.Blazor.Configuration;
 using UI.Blazor.Data;
+using UI.Blazor.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +39,8 @@ var app = builder.Build();
 //{
 //    await context.Response.WriteAsync("End middleware\n");
 //});
+
+//app.UseBrowserAllowed(Browser.Chrome, Browser.Edge);
 
 if (app.Environment.IsDevelopment())
 {
