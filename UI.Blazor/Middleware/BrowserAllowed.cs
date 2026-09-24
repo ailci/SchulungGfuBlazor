@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace UI.Blazor.Middleware;
@@ -16,8 +17,16 @@ public class BrowserAllowed(RequestDelegate next, IEnumerable<Browser> browserAl
     {
         var clientBrowserType = IdentifyBrowser(httpContext);
 
-
-        await next(httpContext);
+        if (browserAllowedList.Any(browser => browser == clientBrowserType))
+        {
+            await next(httpContext);
+        }
+        else
+        {
+            httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
+            httpContext.Response.ContentType = "text/html";
+            await httpContext.Response.WriteAsync($"Der/Die Browser <strong>{clientBrowserType}</strong> wird leider nicht unterstuetzt. <a href=\"https://browsehappy.com\">BrowseHappy</a>", Encoding.UTF8);
+        }
     }
 
     private Browser IdentifyBrowser(HttpContext httpContext)
