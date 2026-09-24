@@ -24,6 +24,7 @@ public static class WebApplicationBuilderExtensions
 
             //QotdService DI
             builder.Services.AddScoped<IQotdService, QotdService>();
+            builder.Services.AddScoped<IAuthorService, AuthorService>();
             builder.Services.AddScoped<IServiceManager, ServiceManager>();
 
             return builder;

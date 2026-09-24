@@ -1,3 +1,4 @@
+using Application.Contracts.Services;
 using Application.ViewModels.Author;
 using Infrastructure;
 using Microsoft.AspNetCore.Components;
@@ -7,7 +8,7 @@ namespace UI.Blazor.Components.Pages.Author;
 public partial class Overview
 {
     [Inject] public ILogger<Overview> Logger { get; set; } = null!;
-    [Inject] public QotdDbContext QotdDbContext { get; set; } = null!;
+    [Inject] public IServiceManager ServiceManager { get; set; } = null!;
     [Inject] public NavigationManager NavManager { get; set; } = null!;
     public IEnumerable<AuthorViewModel>? AuthorsVm { get; set; }
 
@@ -19,17 +20,7 @@ public partial class Overview
 
     public async Task GetAuthorsAsync()
     {
-        var authors = await QotdDbContext.Authors.OrderBy(c => c.Name).ToListAsync();
-        
-        AuthorsVm = authors.Select(a => new AuthorViewModel
-        {
-            Id = a.Id,
-            Name = a.Name,
-            BirthDate = a.BirthDate,
-            Description = a.Description,
-            Photo = a.Photo,
-            PhotoMimeType = a.PhotoMimeType
-        });
+        AuthorsVm = (await ServiceManager.AuthorService.GetAuthorsAsync()).OrderBy(c => c.Name);
     }
 
     public void NavigateToAuthorNew()
