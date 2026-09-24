@@ -1,11 +1,12 @@
 ﻿using Application.Contracts.Services;
 using Application.ViewModels.Qotd;
+using AutoMapper;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace UI.Blazor.Services;
 
-public class QotdService(ILogger<QotdService> logger, IDbContextFactory<QotdDbContext> contextFactory) : IQotdService
+public class QotdService(ILogger<QotdService> logger, IDbContextFactory<QotdDbContext> contextFactory, IMapper mapper) : IQotdService
 {
     public async Task<QuoteOfTheDayViewModel> GetQuoteOfTheDayAsync()
     {
@@ -16,15 +17,19 @@ public class QotdService(ILogger<QotdService> logger, IDbContextFactory<QotdDbCo
         var quotes = await context.Quotes.Include(c => c.Author).AsNoTracking().ToListAsync();
         var randomQuote = quotes.Shuffle().First();
 
-        return new QuoteOfTheDayViewModel
-        {
-            Id = randomQuote.Id,
-            QuoteText = randomQuote.QuoteText,
-            AuthorBirthDate = randomQuote.Author?.BirthDate,
-            AuthorName = randomQuote.Author?.Name ?? string.Empty,
-            AuthorDescription = randomQuote.Author?.Description ?? string.Empty,
-            AuthorPhoto = randomQuote.Author?.Photo,
-            AuthorPhotoMimeType = randomQuote.Author?.PhotoMimeType
-        };
+        //Klassiker Manuelles Mapping
+        //return new QuoteOfTheDayViewModel
+        //{
+        //    Id = randomQuote.Id,
+        //    QuoteText = randomQuote.QuoteText,
+        //    AuthorBirthDate = randomQuote.Author?.BirthDate,
+        //    AuthorName = randomQuote.Author?.Name ?? string.Empty,
+        //    AuthorDescription = randomQuote.Author?.Description ?? string.Empty,
+        //    AuthorPhoto = randomQuote.Author?.Photo,
+        //    AuthorPhotoMimeType = randomQuote.Author?.PhotoMimeType
+        //};
+
+        //Automapper
+        return mapper.Map<QuoteOfTheDayViewModel>(randomQuote);
     }
 }
