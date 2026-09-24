@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
+﻿using Application.Contracts.Services;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UI.Blazor.Components.Account;
 using UI.Blazor.Data;
+using UI.Blazor.Services;
 
 namespace UI.Blazor.Configuration;
 
@@ -19,6 +21,9 @@ public static class WebApplicationBuilderExtensions
                     //Detaillierte Fehlermeldung bei Circuit
                     options.DetailedErrors = builder.Environment.IsDevelopment();
                 });
+
+            //QotdService DI
+            builder.Services.AddScoped<IQotdService, QotdService>();
 
             return builder;
         }
