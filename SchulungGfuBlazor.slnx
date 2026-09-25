@@ -1,4 +1,8 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="Application/Application.csproj" Id="0b81bfac-2156-4c98-9b8c-8bd14fa2c0db" />
     <Project Path="Domain/Domain.csproj" Id="034b65d4-41bf-4907-9994-904e3e7c9318" />

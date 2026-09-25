@@ -14,7 +14,10 @@ public class QotdService(ILogger<QotdService> logger, IDbContextFactory<QotdDbCo
 
         await using var context = await contextFactory.CreateDbContextAsync();
 
-        var quotes = await context.Quotes.Include(c => c.Author).AsNoTracking().ToListAsync();
+        var quotes = await context.Quotes
+            .Include(c => c.Author)
+            .AsNoTracking()
+            .ToListAsync();
         var randomQuote = quotes.Shuffle().First();
 
         //Klassiker Manuelles Mapping
