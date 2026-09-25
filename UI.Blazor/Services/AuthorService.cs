@@ -37,4 +37,24 @@ public class AuthorService(ILogger<QotdService> logger, IDbContextFactory<QotdDb
 
         return mapper.Map<AuthorViewModel>(authorEntity);
     }
+
+    public async Task<bool> DeleteAuthorAsync(Guid authorId)
+    {
+        logger.LogInformation($"{nameof(DeleteAuthorAsync)} mit AuthorId {authorId} aufgerufen...");
+        await using var context = await contextFactory.CreateDbContextAsync();
+
+        //var author = context.Authors.Where(c => c.Id == authorId);
+        //var author = await context.Authors.FirstOrDefaultAsync(c => c.Id == authorId);
+        //var author = await context.Authors.SingleOrDefaultAsync(c => c.Id == authorId);
+        var author = await context.Authors.FindAsync(authorId);
+        
+        if (author is null) return false;
+
+        //Variante ohne FindAsync
+        //var author2 = new Author { Id = authorId, Name = "", Description = "" };
+
+        context.Authors.Remove(author);
+
+        return await context.SaveChangesAsync() > 0;
+    }
 }

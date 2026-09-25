@@ -10,10 +10,10 @@ public class DialogService(IJSRuntime jsRuntime) : IAsyncDisposable
     private readonly Lazy<Task<IJSObjectReference>> moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
         "import", "./_content/UI.Blazor.ComponentsLibrary/js/dialog.js").AsTask());
 
-    public async ValueTask<string> ConfirmAsync(string message)
+    public async ValueTask<bool> ConfirmAsync(string message)
     {
         var module = await moduleTask.Value;
-        return await module.InvokeAsync<string>("myConfirm", message);
+        return await module.InvokeAsync<bool>("myConfirm", message);
     }
 
     public async ValueTask DisposeAsync()
