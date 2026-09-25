@@ -1,8 +1,10 @@
 ﻿using Domain.Entities;
+using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
-using Microsoft.AspNetCore.Components.Forms;
+using Application.Validations;
 
 namespace Application.ViewModels.Author;
 
@@ -10,10 +12,16 @@ public class AuthorForCreateViewModel
 {
     public Guid Id { get; set; }
 
+    [Required(ErrorMessage = "Bitte geben Sie einen Namen ein")]
+    [Length(2, 50, ErrorMessage = "Name ist zu lang")]
+    [DeniedValues(["administrator", "root", "admin", "god"], ErrorMessage = "Der Name ist nicht erlaubt")]
     public required string Name { get; set; }
 
+    [Required(ErrorMessage = "Bitte geben Sie eine Beschreibung ein")]
+    [MinLength(2, ErrorMessage = "Bitte geben Sie eine Beschreibung mit mind. 2 Zeichen ein")]
     public required string Description { get; set; }
 
+    [NoFutureDate(ErrorMessage = "Geburtsdatum liegt in der Zukunft")]
     public DateOnly? BirthDate { get; set; }
 
     public IBrowserFile? Photo { get; set; }
