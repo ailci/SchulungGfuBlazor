@@ -14,5 +14,9 @@ public class MappingProfile : Profile
     {
         CreateMap<Quote, QuoteOfTheDayViewModel>();
         CreateMap<Author, AuthorViewModel>();
+
+        CreateMap<AuthorForCreateViewModel, Author>()
+            .ForMember(dest => dest.Photo, opt => opt.Ignore())
+            .ForMember(dest => dest.PhotoMimeType, opt => opt.Ignore());
     }
 }

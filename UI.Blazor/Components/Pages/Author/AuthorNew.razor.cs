@@ -15,12 +15,23 @@ public partial class AuthorNew
 
     protected override void OnInitialized() => AuthorForCreateVm ??= new() { Name = "", Description = "" };
 
-    private Task HandleValidSubmit(EditContext arg)
+    private async Task HandleValidSubmit(EditContext arg)
     {
-        //TODO: Implementierung
         Logger.LogInformation($"CreateForAuthorVm => {AuthorForCreateVm?.LogAsJson()}");
 
-        return Task.CompletedTask;
+        try
+        {
+            var newAuthorVm = await ServiceManager.AuthorService.AddAuthorAsync(AuthorForCreateVm!);
+
+            if (newAuthorVm is not null)
+            {
+                NavManager.NavigateTo("/authors/overview");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError($"Fehler beim Speichern des Autors: {ex.Message}");
+        }
     }
 
     private void OnInputFileChange(InputFileChangeEventArgs args)

@@ -8,4 +8,5 @@ namespace Application.Contracts.Services;
 public interface IAuthorService
 {
     Task<IEnumerable<AuthorViewModel>> GetAuthorsAsync();
+    Task<AuthorViewModel> AddAuthorAsync(AuthorForCreateViewModel authorForCreateViewModel);
 }
