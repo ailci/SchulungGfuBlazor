@@ -3,12 +3,14 @@ using Application.ViewModels.Qotd;
 using Infrastructure;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.JSInterop;
 
 namespace UI.Blazor.Components.Pages;
 public partial class Home
 {
     [Inject] public ILogger<Home> Logger { get; set; } = null!;
     [Inject] public IServiceManager ServiceManager { get; set; } = null!;
+    [Inject] public IJSRuntime JsRuntime { get; set; } = null!;
     //[Inject] public PersistentComponentState ApplicationState { get; set; } = null!;
     //private PersistingComponentStateSubscription _persistingComponentStateSubscription;
 
@@ -41,12 +43,13 @@ public partial class Home
     //}
 
     // 2. Lösung
-    //protected override async Task OnAfterRenderAsync(bool firstRender)
-    //{
-    //    if (firstRender)
-    //    {
-    //        QotdViewModel = await ServiceManager.QotdService.GetQuoteOfTheDayAsync();
-    //        StateHasChanged();
-    //    }
-    //}
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            //QotdViewModel = await ServiceManager.QotdService.GetQuoteOfTheDayAsync();
+            //StateHasChanged();
+            //await JsRuntime.InvokeVoidAsync("myAlert", "Hallo ich bins");
+        }
+    }
 }
