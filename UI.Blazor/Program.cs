@@ -15,7 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder
     .AddBlazorConfig()
     .AddAuthenticationConfig()
-    .AddSerilogConfig();
+    .AddSerilogConfig()
+    .AddHttpConfig();
 
 builder.Services
     .AddInfrastructureServices(builder.Configuration)

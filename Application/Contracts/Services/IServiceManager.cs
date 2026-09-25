@@ -8,4 +8,5 @@ public interface IServiceManager
 {
     IQotdService QotdService { get; }
     IAuthorService AuthorService { get; }
+    IQotdService QotdApiService { get; }
 }

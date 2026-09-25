@@ -25,6 +25,8 @@ public static class WebApplicationBuilderExtensions
 
             //QotdService DI
             builder.Services.AddScoped<IQotdService, QotdService>();
+            builder.Services.AddKeyedScoped<IQotdService, QotdApiService>("qotdapi");
+
             builder.Services.AddScoped<IAuthorService, AuthorService>();
             builder.Services.AddScoped<IServiceManager, ServiceManager>();
 
@@ -72,6 +74,18 @@ public static class WebApplicationBuilderExtensions
             builder.Host.UseSerilog((hostContext, configuration) =>
             {
                 configuration.ReadFrom.Configuration(hostContext.Configuration);
+            });
+
+            return builder;
+        }
+
+        public WebApplicationBuilder AddHttpConfig()
+        {
+            //Named Client
+            builder.Services.AddHttpClient("qotdapiservice", options =>
+            {
+                options.BaseAddress = new Uri("https://localhost:7009");
+                options.DefaultRequestHeaders.Add("Accept", "application/json");
             });
 
             return builder;
