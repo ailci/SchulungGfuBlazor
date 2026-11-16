@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using UI.Blazor.Components;
 using UI.Blazor.Components.Account;
 using UI.Blazor.Data;
+using UI.Blazor.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +59,8 @@ var app = builder.Build();
 //    await context.Response.WriteAsync("End midlleware\n");
 //});
 
+//BrowserAllowed Middleware
+//app.UseBrowserAllowed(Browser.Chrome, Browser.Edge);
 
 if (app.Environment.IsDevelopment())
 {

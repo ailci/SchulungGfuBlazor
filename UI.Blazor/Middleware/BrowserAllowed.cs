@@ -30,7 +30,18 @@ public class BrowserAllowed
     {
         var clientBrowserType = IdentifyBrowser(httpContext);
 
-        await _next(httpContext);
+        if (_browserWhiteList.Any(browser => browser == clientBrowserType)) //Erfolgsfall Browser in White list vorhanden
+        {
+            await _next(httpContext);
+        }
+        else //Nicht vorhanden
+        {
+            httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
+            httpContext.Response.ContentType = "text/html";
+            await httpContext.Response.WriteAsync(
+                $"Browser: {clientBrowserType} nicht erlaubt. Du kommst hier nicht rein!");
+        }
+
     }
 
     private Browser IdentifyBrowser(HttpContext httpContext)
