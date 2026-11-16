@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+    .AddInteractiveServerComponents(); //Blazor Server
 
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityRedirectManager>();
@@ -40,7 +40,25 @@ builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSe
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline. ##################################################
+//app.Use(async (context, next) =>
+//{
+//    var userAgent = context.Request.Headers["User-Agent"][0].ToLower();
+//    await context.Response.WriteAsync($"ERste midlleware {userAgent}\n");
+//    await next();
+//    await context.Response.WriteAsync("ERste BAck midlleware\n");
+//});
+//app.Use(async (context, next) =>
+//{
+//    await context.Response.WriteAsync("Zweite midlleware\n");
+//    await next();
+//});
+//app.Run(async context =>
+//{
+//    await context.Response.WriteAsync("End midlleware\n");
+//});
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
