@@ -1,5 +1,11 @@
-﻿<h3>QuoteOfTheDay</h3>
+﻿@using Application.ViewModels.Qotd
+
 
 @code {
 
+    [Parameter, EditorRequired]
+    public string? Title { get; set; }
+
+    [Parameter, EditorRequired]
+    public QuoteOfTheDayViewModel? QotdVm { get; set; }
 }
