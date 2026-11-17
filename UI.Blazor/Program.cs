@@ -1,3 +1,4 @@
+using Infrastructure;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,7 @@ builder
     .AddBlazorConfig()
     .AddAuthentificationConfig();
 
-
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 var app = builder.Build();
 
