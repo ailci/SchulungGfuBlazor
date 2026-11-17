@@ -1,18 +1,21 @@
 ﻿@if (!string.IsNullOrWhiteSpace(ImageMimeType) && Image is not null)
 {
     //Data-Uri => src="data:MIMETYPE;base64,NUTZDATEN"
-    <img width="150" src="data:@ImageMimeType;base64,@Convert.ToBase64String(Image)" />
+    <img width="150" src="data:@ImageMimeType;base64,@Convert.ToBase64String(Image)" @attributes="AdditionalAttributes" />
 }
 else
 {
-    <img width="150" src="https://placehold.co/150" />
+    <img width="150" src="https://placehold.co/150" @attributes="AdditionalAttributes" />
 }
 
 @code {
 
     [Parameter, EditorRequired]
     public string? ImageMimeType { get; set; }  
-    
+
     [Parameter, EditorRequired]
-    public byte[]? Image { get; set; }  
+    public byte[]? Image { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)] // für alle anderen Attribute die nicht mit [Parameter] übergeben wurden
+    public Dictionary<string,object>? AdditionalAttributes { get; set; }
 }
