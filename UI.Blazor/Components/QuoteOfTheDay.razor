@@ -9,8 +9,8 @@ else
             <div class="p-2 rounded-3">
                 <h5 class="display-6 py-3">@Title</h5>
                 <p class="text-center">
-                    <!-- Author Photo -->
-                    @if(!string.IsNullOrWhiteSpace(QotdVm.AuthorPhotoMimeType) && QotdVm.AuthorPhoto is not null)
+                    <!-- 1.Version -->
+                   @*  @if(!string.IsNullOrWhiteSpace(QotdVm.AuthorPhotoMimeType) && QotdVm.AuthorPhoto is not null)
                     {
                         //Data-Uri => src="data:MIMETYPE;base64,NUTZDATEN"
                         <img width="150" src="data:@QotdVm.AuthorPhotoMimeType;base64,@Convert.ToBase64String(QotdVm.AuthorPhoto)" alt="@QotdVm.AuthorName" />
@@ -18,7 +18,13 @@ else
                     else
                     {
                         <img width="150" src="https://placehold.co/150" alt="@QotdVm.AuthorName" />
-                    }
+                    } *@
+
+                    <!-- 2. Version -->
+                    <DataImageUri 
+                        ImageMimeType="@QotdVm.AuthorPhotoMimeType"
+                        Image="@QotdVm.AuthorPhoto">
+                    </DataImageUri>
                 </p>
                 <blockquote class="text-center">
                     <p class="lead fw-bold">@QotdVm.QuoteText</p>
