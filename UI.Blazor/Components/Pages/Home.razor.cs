@@ -14,12 +14,6 @@ public partial class Home
     {
         var authors = QotdDbContext.Authors.ToList();
 
-        QotdViewModel = new QuoteOfTheDayViewModel
-        {
-            AuthorName = "Ich",
-            AuthorDescription = "Dozent",
-            AuthorBirthDate = new DateOnly(1978,07,13),
-            QuoteText = "Lierum Larum Löffelstiel"
-        };
+       
     }
 }
