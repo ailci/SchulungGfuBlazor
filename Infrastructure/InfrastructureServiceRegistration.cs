@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Application.Contracts.Services;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,9 @@ public static class InfrastructureServiceRegistration
         {
             options.UseSqlServer(connectionString); //SqlServer
         });
+
+        //DI
+        services.AddScoped<IQotdService, QotdService>();
 
         return services;
     }
