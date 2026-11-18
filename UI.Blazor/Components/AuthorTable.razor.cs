@@ -8,10 +8,12 @@ public partial class AuthorTable
 {
     [Inject] public ILogger<AuthorTable> Logger { get; set; } = null!;
     [Parameter, EditorRequired] public IEnumerable<AuthorViewModel>? AuthorViewModels { get; set; }
+    [Parameter] public EventCallback<Guid> OnAuthorDelete { get; set; }
 
-    private Task ShowConfirmation(AuthorViewModel authorVm)
+    private async Task ShowConfirmation(AuthorViewModel authorVm)
     {
         Logger.LogInformation($"AuthorVm: {authorVm.LogAsJson()}");
-        return Task.CompletedTask;
+
+        await OnAuthorDelete.InvokeAsync(authorVm.Id);
     }
 }
