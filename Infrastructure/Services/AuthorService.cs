@@ -45,4 +45,22 @@ public class AuthorService(ILogger<AuthorService> logger, IDbContextFactory<Qotd
 
         return authorViewModels;
     }
+
+    public async Task<bool> DeleteAuthorAsync(Guid authorId)
+    {
+        logger.LogInformation($"{nameof(GetAuthorsAsync)} aufgerufen mit Author-Id: {authorId}...");
+        await using var context = await contextFactory.CreateDbContextAsync();
+
+        //var author = context.Authors.Where(author => author.Id == authorId);
+        //var author = await context.Authors.FirstOrDefaultAsync(author => author.Id == authorId);
+        //var author = await context.Authors.SingleOrDefaultAsync(author => author.Id == authorId);
+        var author = await context.Authors.FindAsync(authorId);
+        if (author is null) return false;
+
+        //Variante ohne FindAsync
+        //var author = new Author { Id = authorId, Name = "", Description = "" };
+
+        context.Authors.Remove(author);
+        return await context.SaveChangesAsync() > 0;
+    }
 }
