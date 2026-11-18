@@ -12,6 +12,6 @@ public partial class Overview
 
     protected override async Task OnInitializedAsync()
     {
-        AuthorsVm = await ServiceManager.AuthorService.GetAuthorsAsync();
+        AuthorsVm = (await ServiceManager.AuthorService.GetAuthorsAsync()).OrderBy(c => c.Name);
     }
 }
