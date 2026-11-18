@@ -24,6 +24,7 @@ public static class InfrastructureServiceRegistration
 
         //DI
         services.AddScoped<IQotdService, QotdService>();
+        services.AddScoped<IAuthorService, AuthorService>();
         services.AddScoped<IServiceManager, ServiceManager>();
 
         return services;
