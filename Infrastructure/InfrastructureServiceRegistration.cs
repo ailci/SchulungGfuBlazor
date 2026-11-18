@@ -16,7 +16,8 @@ public static class InfrastructureServiceRegistration
         var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
         //DB
-        services.AddDbContext<QotdDbContext>(options =>
+        //https://learn.microsoft.com/en-us/aspnet/core/blazor/blazor-ef-core?view=aspnetcore-10.0
+        services.AddDbContextFactory<QotdDbContext>(options =>
         {
             options.UseSqlServer(connectionString); //SqlServer
         });
