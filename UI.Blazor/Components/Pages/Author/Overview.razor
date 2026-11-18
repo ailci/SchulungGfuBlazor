@@ -33,7 +33,8 @@ else
                     <td>@author.Description</td>
                     <td>@(author.BirthDate is not null ? author.BirthDate.Value.ToShortDateString() : "k.A.")</td>
                     <td>
-                        <!-- TODO: Buttons -->
+                       
+                        <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
                     </td>
                 </tr>
             }
