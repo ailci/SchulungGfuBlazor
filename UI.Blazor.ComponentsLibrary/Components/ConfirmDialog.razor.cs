@@ -11,12 +11,14 @@ public partial class ConfirmDialog
     public void Show()
     {
         _showConfirm = true;
+        StateHasChanged();
     }
 
     public void Show(string message)
     {
         _showConfirm = true;
         ConfirmMessage = message;
+        StateHasChanged();
     }
 
     private async Task OnConfirmChange(bool isDeleteConfirmed)

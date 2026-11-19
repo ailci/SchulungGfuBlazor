@@ -37,5 +37,5 @@ else
         </tbody>
     </table>
 
-    <ConfirmDialog ConfirmTitle="Löschen bestätigen"></ConfirmDialog>
+    <ConfirmDialog @ref="_confirmDialogComponent" ConfirmTitle="Löschen bestätigen" OnConfirmClicked="ConfirmDeleteClicked"></ConfirmDialog>
 }
