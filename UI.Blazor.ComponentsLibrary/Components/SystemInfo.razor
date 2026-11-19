@@ -1,4 +1,5 @@
-﻿
+﻿@using Microsoft.JSInterop
+@inject IJSRuntime JsRuntime
 
 <div class="row">
     <div class="col">
@@ -19,6 +20,8 @@
                     <strong>Geplanter Rendermodus:</strong> @AssignedRenderMode?.ToString()<br/>
                     <strong>Ziel-Rendermodus erreicht:</strong> @AssignedRenderModeReached<br/>
                 </div>
+
+                <!-- TODO: JS Infos -->
             </div>
         </div>
     </div>
@@ -27,9 +30,27 @@
 @code {
     private bool AssignedRenderModeReached => AssignedRenderMode switch
     {
-        InteractiveServerRenderMode => RendererInfo is { Name: "Server", IsInteractive: true },
+        InteractiveServerRenderMode => RendererInfo is {
+            Name: "Server", IsInteractive: true },
         InteractiveWebAssemblyRenderMode => RendererInfo.Name == "WebAssembly",
         InteractiveAutoRenderMode => RendererInfo.Name == "WebAssembly",
         _ => true
     };
+
+    private IJSObjectReference _jsModule = null!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var dotNetObjRef = DotNetObjectReference.Create(this); //Componente als Referenz
+            _jsModule = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/UI.Blazor.ComponentsLibrary/Components/SystemInfo.razor.js");
+            await _jsModule.InvokeVoidAsync("GetBrowserInfo", dotNetObjRef, nameof(SetBrowserInfo));
+        }
+    }
+
+    public void SetBrowserInfo()
+    {
+        
+    }
 }
