@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using UI.Blazor.Components;
 using UI.Blazor.Components.Account;
 using UI.Blazor.Components.Pages;
+using UI.Blazor.ComponentsLibrary;
 using UI.Blazor.Configuration;
 using UI.Blazor.Data;
 using UI.Blazor.Middleware;
@@ -16,7 +17,9 @@ builder
     .AddBlazorConfig()
     .AddAuthentificationConfig();
 
-builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services
+    .AddInfrastructureServices(builder.Configuration) //DB
+    .AddComponentsLibraryServices(); //ComponentsLibrary
 
 var app = builder.Build();
 

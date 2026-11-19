@@ -3,6 +3,7 @@
     <Project Path="Application/Application.csproj" />
     <Project Path="Domain/Domain.csproj" />
     <Project Path="Infrastructure/Infrastructure.csproj" />
+    <Project Path="UI.Blazor.ComponentsLibrary/UI.Blazor.ComponentsLibrary.csproj" Id="6e7fd772-15f5-4800-a19b-5abc60616254" />
     <Project Path="UI.Blazor/UI.Blazor.csproj" />
   </Folder>
 </Solution>

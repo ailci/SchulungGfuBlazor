@@ -13,7 +13,12 @@ public static class WebApplicationBuilderExtensions
         public WebApplicationBuilder AddBlazorConfig()
         {
             builder.Services.AddRazorComponents()
-                .AddInteractiveServerComponents(); //Blazor Server
+                .AddInteractiveServerComponents(options =>
+                {
+                    //Detaillierte Fehlermeldung
+                    options.DetailedErrors = builder.Environment.IsDevelopment();
+
+                }); //Blazor Server
 
             return builder;
         }
