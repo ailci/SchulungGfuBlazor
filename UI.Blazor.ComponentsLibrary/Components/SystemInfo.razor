@@ -1,0 +1,35 @@
+﻿
+
+<div class="row">
+    <div class="col">
+        <div class="card" style="margin-top: 20px">
+            <div class="card-header">SystemInfo</div>
+            <div class="card-body">
+                <div>
+                    <strong>.NET:</strong> @System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription
+                </div>
+                <div>
+                    <strong>Rechnername:</strong> @Environment.MachineName<br/>
+                    <strong>Architektur:</strong> @System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture<br/>
+                    <strong>OS:</strong> @Environment.OSVersion<br/>
+                </div>
+                <div>
+                    <strong>Rendermodus:</strong> @RendererInfo.Name<br/>
+                    <strong>Interaktiv:</strong> @RendererInfo.IsInteractive<br/>
+                    <strong>Geplanter Rendermodus:</strong> @AssignedRenderMode?.ToString()<br/>
+                    <strong>Ziel-Rendermodus erreicht:</strong> @AssignedRenderModeReached<br/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private bool AssignedRenderModeReached => AssignedRenderMode switch
+    {
+        InteractiveServerRenderMode => RendererInfo is { Name: "Server", IsInteractive: true },
+        InteractiveWebAssemblyRenderMode => RendererInfo.Name == "WebAssembly",
+        InteractiveAutoRenderMode => RendererInfo.Name == "WebAssembly",
+        _ => true
+    };
+}
