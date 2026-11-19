@@ -8,6 +8,7 @@ public partial class Overview
 {
     [Inject] public ILogger<Overview> Logger { get; set; } = null!;
     [Inject] public IServiceManager ServiceManager { get; set; } = null!;
+    [Inject] public NavigationManager NavManager { get; set; } = null!;
     public IEnumerable<AuthorViewModel>? AuthorsVm { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -42,5 +43,9 @@ public partial class Overview
         {
             Logger.LogError($"Author mit ID: {authorId} konnte NICHT gelöscht werden. Message: {ex.Message}");
         }
+    }
+    private void NavigateToAuthorNew()
+    {
+        NavManager.NavigateTo("/authors/new");
     }
 }

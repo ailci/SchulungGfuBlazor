@@ -1,6 +1,11 @@
 ﻿@page "/authors/overview"
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
+<div class="row">
+    <div class="col-4">
+        <button class="btn btn-primary" @onclick="NavigateToAuthorNew"><i class="bi bi-plus-circle"></i> Neuer Autor</button>
+    </div>
+</div>
 
 <div class="row">
     <div class="col">
