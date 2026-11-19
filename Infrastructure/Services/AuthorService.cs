@@ -5,11 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Application.ViewModels.Author;
+using AutoMapper;
 using Domain.Entities;
 
 namespace Infrastructure.Services;
 
-public class AuthorService(ILogger<AuthorService> logger, IDbContextFactory<QotdDbContext> contextFactory) : IAuthorService
+public class AuthorService(ILogger<AuthorService> logger, IDbContextFactory<QotdDbContext> contextFactory, IMapper mapper) : IAuthorService
 {
     public async Task<IEnumerable<AuthorViewModel>> GetAuthorsAsync()
     {
@@ -33,17 +34,20 @@ public class AuthorService(ILogger<AuthorService> logger, IDbContextFactory<Qotd
         //    });
         //}
 
-        var authorViewModels = authors.Select(a => new AuthorViewModel
-        {
-            Id = a.Id,
-            Name = a.Name,
-            Description = a.Description,
-            BirthDate = a.BirthDate,
-            Photo = a.Photo,
-            PhotoMimeType = a.PhotoMimeType
-        });
+        //var authorViewModels = authors.Select(a => new AuthorViewModel
+        //{
+        //    Id = a.Id,
+        //    Name = a.Name,
+        //    Description = a.Description,
+        //    BirthDate = a.BirthDate,
+        //    Photo = a.Photo,
+        //    PhotoMimeType = a.PhotoMimeType
+        //});
 
-        return authorViewModels;
+        //return authorViewModels;
+
+        //Automapper
+        return mapper.Map<IEnumerable<AuthorViewModel>>(authors);
     }
 
     public async Task<bool> DeleteAuthorAsync(Guid authorId)
