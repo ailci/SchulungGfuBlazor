@@ -1,3 +1,4 @@
+using Application;
 using Infrastructure;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -19,7 +20,9 @@ builder
 
 builder.Services
     .AddInfrastructureServices(builder.Configuration) //DB
-    .AddComponentsLibraryServices(); //ComponentsLibrary
+    .AddComponentsLibraryServices() //ComponentsLibrary
+    .AddApplicationServices();
+    
 
 var app = builder.Build();
 
