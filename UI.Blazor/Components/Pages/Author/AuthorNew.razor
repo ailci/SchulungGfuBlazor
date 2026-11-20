@@ -9,7 +9,7 @@
 </div>
 <div class="row align-items-center">
     <div class="col-6">
-        <EditForm Model="AuthorForCreateVm" class="card card-body bg-light">
+        <EditForm Model="AuthorForCreateVm" OnValidSubmit="HandleValidSubmit" class="card card-body bg-light">
 
             <!-- Name -->
             <div class="form-floating mb-3">
@@ -43,8 +43,9 @@
             
             <!-- Photo -->
             <div class="form-floating mb-3">
-                <InputFile id="Photo"
+                <InputFile OnChange="OnInputFileChange" id="Photo"
                            class="form-control"
+                           accept="image/png, image/jpg, image/jpeg, image/gif"
                            @bind-Value="@AuthorForCreateVm!.Photo"
                            placeholder="">
                 </InputFile>
@@ -56,6 +57,7 @@
             </div>
         </EditForm>
     </div>
+    <div class="offset-1 col-4">
+        <ImagePreview SelectedPhoto="@SelectedAuthorPhoto"></ImagePreview>
+    </div>
 </div>
-
-
