@@ -4,9 +4,11 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Application.Utilities;
 using Application.ViewModels.Author;
 using AutoMapper;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace Infrastructure.Services;
 
@@ -66,5 +68,24 @@ public class AuthorService(ILogger<AuthorService> logger, IDbContextFactory<Qotd
 
         context.Authors.Remove(author);
         return await context.SaveChangesAsync() > 0;
+    }
+
+    public async Task<AuthorViewModel> AddAuthorAsync(AuthorForCreateViewModel authorForCreateVm)
+    {
+        logger.LogInformation($"{nameof(AddAuthorAsync)} aufgerufen mit AuthorForCreateViewModel: {authorForCreateVm?.LogAsJson()}...");
+        await using var context = await contextFactory.CreateDbContextAsync();
+
+        var authorEntity = mapper.Map<Author>(authorForCreateVm);
+
+        //Falls Bild ausgewählt
+        if (authorForCreateVm.Photo is not null)
+        {
+            (authorEntity.Photo, authorEntity.PhotoMimeType) = await authorForCreateVm.Photo.GetFile();
+        }
+
+        await context.Authors.AddAsync(authorEntity);
+        await context.SaveChangesAsync();
+
+        return mapper.Map<AuthorViewModel>(authorEntity);
     }
 }
