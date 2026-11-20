@@ -13,6 +13,7 @@ public partial class HomeApi
     [Inject] public ILogger<Overview> Logger { get; set; } = null!;
     [Inject] public IServiceManager ServiceManager { get; set; } = null!;
     [Inject] public IHttpClientFactory HttpClientFactory { get; set; } = null!;
+    [Inject(Key = "qotdapi")] public IQotdService QotdApiService { get; set; } = null!;
     public QuoteOfTheDayViewModel? QotdViewModel { get; set; }
    
   
@@ -21,13 +22,15 @@ public partial class HomeApi
         try
         {
             //1.Version Klassik
+            //var client = HttpClientFactory.CreateClient("qotdapi");
+            //var response = await client.GetAsync("api/qotd");
+            //response.EnsureSuccessStatusCode();
+            //var content = await response.Content.ReadAsStringAsync();
+            //QotdViewModel = JsonSerializer.Deserialize<QuoteOfTheDayViewModel>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true});
+
+            //2. Abkürzung
             var client = HttpClientFactory.CreateClient("qotdapi");
-            var response = await client.GetAsync("api/qotd");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            QotdViewModel = JsonSerializer.Deserialize<QuoteOfTheDayViewModel>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true});
-
-
+            QotdViewModel = await client.GetFromJsonAsync<QuoteOfTheDayViewModel>("api/qotd");
         }
         catch (HttpRequestException e)
         {

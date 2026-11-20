@@ -1,4 +1,5 @@
 using Application;
+using Application.Contracts.Services;
 using Infrastructure;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -10,6 +11,7 @@ using UI.Blazor.ComponentsLibrary;
 using UI.Blazor.Configuration;
 using UI.Blazor.Data;
 using UI.Blazor.Middleware;
+using UI.Blazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +25,8 @@ builder.Services
     .AddInfrastructureServices(builder.Configuration) //DB
     .AddComponentsLibraryServices() //ComponentsLibrary
     .AddApplicationServices();
-    
+
+builder.Services.AddKeyedScoped<IQotdService, QotdApiService>("qotdapi");
 
 var app = builder.Build();
 

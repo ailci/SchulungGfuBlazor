@@ -1,4 +1,5 @@
 using Application;
+using Application.Contracts.Services;
 using Infrastructure;
 using Scalar.AspNetCore;
 
