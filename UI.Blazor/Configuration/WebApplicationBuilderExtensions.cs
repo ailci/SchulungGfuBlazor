@@ -54,5 +54,17 @@ public static class WebApplicationBuilderExtensions
 
             return builder;
         }
+
+        public WebApplicationBuilder AddHttpClients()
+        {
+            //Named Client
+            builder.Services.AddHttpClient("qotdapi", options =>
+            {
+                options.BaseAddress = new Uri("https://localhost:7083");
+                options.DefaultRequestHeaders.Add("Accept","application/json");
+            });
+
+            return builder;
+        }
     }
 }
