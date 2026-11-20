@@ -1,0 +1,7 @@
+﻿@page "/homeapi"
+
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+<PageTitle>Quote Of The Day</PageTitle>
+
+<QuoteOfTheDay Title="Spruch Des Tages" QotdVm="@QotdViewModel"></QuoteOfTheDay>

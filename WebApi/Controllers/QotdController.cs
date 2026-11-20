@@ -1,5 +1,6 @@
 ﻿using Application.Contracts.Services;
 using Application.Utilities;
+using Application.ViewModels.Qotd;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +11,7 @@ namespace WebApi.Controllers;
 public class QotdController(ILogger<QotdController> logger, IServiceManager serviceManager) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetQuoteOfTheDay()
+    public async Task<ActionResult<QuoteOfTheDayViewModel>> GetQuoteOfTheDay()
     {
         logger.LogInformation($"{nameof(GetQuoteOfTheDay)} API aufgerufen...");
         var qotdVm = await serviceManager.QotdService.GetQuoteOfTheDayAsync();
